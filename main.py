@@ -5,7 +5,7 @@ This script demonstrates how to use the Gemini API to generate content using the
 It loads the API key from environment variables, sends a prompt, and prints the response along with token usage statistics.
 """
 
-import os
+import os, sys
 from dotenv import load_dotenv
 from google import genai
 
@@ -20,12 +20,20 @@ def main():
 
     client = genai.Client(api_key=api_key)  # Initialize Gemini client
 
+    # Check if a prompt is provided as a command-line argument
+    if len(sys.argv) > 1:
+        prompt = sys.argv[1]
+    else:
+        raise Exception("Please provide a prompt for the AI.")
+        exit(1)
+
     # Generate content using Gemini model
     response = client.models.generate_content(
         model="gemini-2.0-flash-001",
-        contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum.",
+        contents=prompt,
     )
 
+    
     print(response.text)  # Print model response
     print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")  # Print prompt token count
     print(f"Response tokens: {response.usage_metadata.candidates_token_count}")  # Print response token count
