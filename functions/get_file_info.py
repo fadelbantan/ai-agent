@@ -1,5 +1,8 @@
 import os
 from google.genai import types
+from .get_file_content import schema_get_file_content
+from .run_python_file import schema_run_python_file
+from .write_file import schema_write_file
 
 def get_files_info(working_directory, directory='.'):
     abs_working_dir = os.path.abspath(working_directory) # Get absolute path of working directory
@@ -50,5 +53,8 @@ schema_get_files_info = types.FunctionDeclaration(
 available_functions = types.Tool(
     function_declarations=[
         schema_get_files_info,
+        schema_get_file_content,
+        schema_run_python_file,
+        schema_write_file,
     ]
 )   

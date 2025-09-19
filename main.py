@@ -9,7 +9,7 @@ import os, sys, argparse
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
-from functions.get_file_info import schema_get_files_info, available_functions
+from functions.get_file_info import available_functions
 
 def main():
     """
@@ -48,6 +48,9 @@ def generate_content(client, messages, user_prompt, verbose):
         You are a helpful AI coding agent.
         When a user asks a question or makes a request, make a function call plan. You can perform the following operations:
         - List files and directories
+        - Read file contents
+        - Execute Python files with optional arguments
+        - Write or overwrite files
         All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
         """
     response = client.models.generate_content(
